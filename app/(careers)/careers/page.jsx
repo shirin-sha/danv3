@@ -10,7 +10,7 @@ export default function CareersPage() {
       <Header2 />
       <div
         className="breadcrumb-wrapper bg-cover"
-        style={{ backgroundImage: 'url("/assets/img/pagetitle.jpg")' }}
+        style={{ backgroundImage: 'url("/assets/img/pagetitle1.jpg")' }}
       >
         <div className="shape-image float-bob-y">
         

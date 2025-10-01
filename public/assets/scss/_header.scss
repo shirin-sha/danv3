@@ -25,7 +25,7 @@
 
 .header-top-wrapper-2 {
 	background-color: $theme-color;
-	padding: 15px 30px;
+	padding: 5px 15px;
 	@include flex;
 	justify-content: space-between;
 	position: relative;
@@ -452,7 +452,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 10px 0;
+	padding: 3px 0;
 	
 	.main-menu {
 		ul {
@@ -933,7 +933,7 @@
 	&::before {
 		@include before;
 		z-index: -1;
-		opacity: 0.85;
+		opacity: 0.65;
 		background: $header-color;
 	}
 

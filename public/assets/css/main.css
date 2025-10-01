@@ -2426,7 +2426,7 @@ span {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 5px 0;
 }
 .header-main .main-menu ul {
   margin-bottom: 0;
@@ -2961,7 +2961,7 @@ span {
   height: 100%;
   content: "";
   z-index: -1;
-  opacity: 0.85;
+  opacity: 0.55;
   background: var(--header);
 }
 .breadcrumb-wrapper .shape-image {
@@ -3744,7 +3744,7 @@ span {
   height: 100%;
   content: "";
   z-index: -1;
-  background: rgba(18, 19, 21, 0.85);
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(30, 58, 138, 0.85));
 }
 .hero-2 .hero-image {
   position: absolute;

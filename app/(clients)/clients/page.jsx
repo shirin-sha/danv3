@@ -34,7 +34,7 @@ export default function ClientsPage() {
       <div
         id="top"
         className="breadcrumb-wrapper bg-cover"
-        style={{ backgroundImage: 'url("/assets/img/pagetitle.jpg")' }}
+        style={{ backgroundImage: 'url("/assets/img/pagetitle1.jpg")' }}
       >
         <div className="shape-image float-bob-y"></div>
         <div className="container">

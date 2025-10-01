@@ -230,7 +230,7 @@
     &::before {
         @include before;
         z-index: -1;
-        background: rgba(18, 19, 21, 0.85);
+        background: rgba(18, 19, 21, 0.65);
     }
 
     .hero-image {

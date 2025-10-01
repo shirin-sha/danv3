@@ -21,7 +21,7 @@ export default function page() {
       <Header2 />
       <div
         className="breadcrumb-wrapper bg-cover"
-        style={{ backgroundImage: 'url("/assets/img/pagetitle.jpg")' }}
+        style={{ backgroundImage: 'url("/assets/img/pagetitle1.jpg")' }}
       >
       
         <div className="container">
@@ -64,7 +64,7 @@ export default function page() {
               <div className="col-lg-6">
                 <div className="about-image">
                   <Image
-                    src="/assets/img/about/01.jpg"
+                    src="/assets/img/about/A1.jpg"
                     alt="img"
                     width={485}
                     height={592}
@@ -76,7 +76,7 @@ export default function page() {
                     data-wow-delay=".4s"
                   >
                     <Image
-                      src="/assets/img/about/02.jpg"
+                      src="/assets/img/about/A2.jpg"
                       width={260}
                       height={270}
                       alt="img"
