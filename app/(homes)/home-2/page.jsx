@@ -29,8 +29,8 @@ export default function page() {
       >
         <Pricing />
       </section>
-      <Cta />
-      <Achievements />
+      {/* <Cta /> */}
+      {/* <Achievements /> */}
       <div className="brand-section fix section-padding">
         <Brands />
       </div>

@@ -85,14 +85,12 @@ export default function About() {
                       <i className="fa-regular fa-arrow-right-long" />
                     </h6>
                     <h2 className="splt-txt wow">
-                      <AnimatedText text="Committed to Delivering" /> <br />
-                      <AnimatedText text="Industrial Excellence" />
+                      <AnimatedText text="Leading Industrial Players" /> <br />
+                      <AnimatedText text=" in Kuwait" />
                     </h2>
                   </div>
                   <p className="mt-3 mt-md-0 wow fadeInUp" data-wow-delay=".4s">
-                  With over 45 years of proven performance, DAN Trading provides reliable solutions and
-services across Kuwait’s Oil, Gas, Power, Water, and Logistics sectors. We combine local
-expertise with global partnerships.
+                  Well established since 1978, providing a diversified range of product and services in the field of oil, gas, petrochemicals, power, water and Logistic.
                   </p>
                   <div className="row g-4 mt-3">
                     <div className="col-lg-4 wow fadeInUp" data-wow-delay=".2s">
@@ -141,20 +139,7 @@ expertise with global partnerships.
                       </div>
                     </div>
                   </div>
-                  <ul className="list-items mt-3 wow fadeInUp" data-wow-delay=".2s">
-                    <li>
-                      <i className="fa-solid fa-circle-check check-icon" />
-                      Trusted by leading government & private sector clients
-                    </li>
-                    <li>
-                      <i className="fa-solid fa-circle-check check-icon" />
-                      Delivering end-to-end industrial solutions
-                    </li>
-                    <li>
-                      <i className="fa-solid fa-circle-check check-icon" />
-                      Driven by safety, quality, and innovation
-                    </li>
-                  </ul>
+              
                   <div className="about-author">
                     <Link
                       href={`/about`}
