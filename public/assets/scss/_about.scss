@@ -189,7 +189,7 @@
         }
 
         img {
-            @include imgw;
+            width: 100%;
         }
 
         &::before {

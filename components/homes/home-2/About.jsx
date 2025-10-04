@@ -37,7 +37,7 @@ export default function About() {
                     src="/assets/img/about/Section-2-Image-1.jpg"
                     alt="img"
                     width={337}
-                    height={378}
+                    height={358}
                     className="wow fadeInLeft"
                     data-wow-delay=".3s"
                   />
@@ -47,9 +47,10 @@ export default function About() {
                   >
                     <Image
                       src="/assets/img/about/Section-2-Image-2.jpg"
-                      width={303}
-                      height={323}
+                      width={200}
+                      height={220}
                       alt="img"
+                      style={{ width: '200px !important', height: '200px !important' }}
                     />
                   </div>
                   {/* <div className="video-items wow fadeInUp">
@@ -70,7 +71,7 @@ export default function About() {
                     <Image
                       src="/assets/img/about/Section-2-Image-3.jpg"
                       width={40}
-                      height={207}
+                      height={160}
                       alt="img"
                     />
                   </div>
@@ -141,13 +142,6 @@ export default function About() {
                   </div>
               
                   <div className="about-author">
-                    <Link
-                      href={`/about`}
-                      className="theme-btn wow fadeInUp"
-                      data-wow-delay=".2s"
-                    >
-                      Explore more <i className="fa-regular fa-arrow-right" />
-                    </Link>
                     <div
                       className="author-image wow fadeInUp"
                       data-wow-delay=".4s"
@@ -155,6 +149,16 @@ export default function About() {
                   
                     
                     </div>
+                  </div>
+                  
+                  <div className="mt-4">
+                    <Link
+                      href={`/about`}
+                      className="theme-btn wow fadeInUp"
+                      data-wow-delay=".2s"
+                    >
+                      Explore more <i className="fa-regular fa-arrow-right" />
+                    </Link>
                   </div>
                 </div>
               </div>
