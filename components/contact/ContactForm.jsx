@@ -13,6 +13,7 @@ const initialFormState = {
 export default function ContactForm() {
   const [formData, setFormData] = useState(initialFormState);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [statusMessage, setStatusMessage] = useState({ type: "", text: "" });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -25,6 +26,7 @@ export default function ContactForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsSubmitting(true);
+    setStatusMessage({ type: "", text: "" });
 
     try {
       const response = await fetch("/api/enquiries", {
@@ -41,8 +43,9 @@ export default function ContactForm() {
       }
 
       setFormData(initialFormState);
+      setStatusMessage({ type: "success", text: "Message sent successfully! We will get back to you soon." });
     } catch (error) {
- 
+      setStatusMessage({ type: "error", text: error.message || "Something went wrong. Please try again." });
     } finally {
       setIsSubmitting(false);
     }
@@ -138,6 +141,11 @@ export default function ContactForm() {
                 </div>
               </div>
               <div className="col-lg-12 wow fadeInUp" data-wow-delay=".4s">
+                {statusMessage.text && (
+                  <div className={`alert ${statusMessage.type === "success" ? "alert-success" : "alert-danger"} mb-4`}>
+                    {statusMessage.text}
+                  </div>
+                )}
                 <button type="submit" className="theme-btn w-100" disabled={isSubmitting}>
                   {isSubmitting ? "Sending..." : "SEND MESSAGE NOW"}
                 </button>
