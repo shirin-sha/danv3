@@ -1,11 +1,12 @@
 "use client";
+import { Suspense } from "react";
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Footer1 from "@/components/footers/Footer1";
 import Header2 from "@/components/headers/Header2";
 import Link from "next/link";
 
-export default function ApplyPage() {
+function ApplyContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const jobId = searchParams.get("jobId");
@@ -440,6 +441,23 @@ export default function ApplyPage() {
 
       <Footer1 />
     </>
+  );
+}
+
+export default function ApplyPage() {
+  return (
+    <Suspense fallback={
+      <>
+        <Header2 />
+        <div className="container section-padding text-center">
+          <i className="fa-solid fa-spinner fa-spin fa-2x"></i>
+          <p className="mt-3 text-muted">Loading...</p>
+        </div>
+        <Footer1 />
+      </>
+    }>
+      <ApplyContent />
+    </Suspense>
   );
 }
 
