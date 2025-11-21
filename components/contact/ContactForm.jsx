@@ -1,43 +1,51 @@
 "use client";
-import emailjs from "@emailjs/browser";
-import React, { useRef } from "react";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useState } from "react";
 import AnimatedText from "../common/AnimatedText";
 
-export default function ContactForm() {
-  const form = useRef();
+const initialFormState = {
+  firstName: "",
+  lastName: "",
+  phone: "",
+  email: "",
+  message: "",
+};
 
-  const sandMail = (e) => {
-    e.preventDefault();
-    emailjs
-      .sendForm("service_noj8796", "template_fs3xchn", form.current, {
-        publicKey: "iG4SCmR-YtJagQ4gV",
-      })
-      .then((res) => {
-        if (res.status == 200) {
-          toast.success("Message Sent successfully!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          form.current.reset();
-        } else {
-          toast.error("Ops Message not Sent!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        }
+export default function ContactForm() {
+  const [formData, setFormData] = useState(initialFormState);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/enquiries", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || "Unable to send message.");
+      }
+
+      setFormData(initialFormState);
+    } catch (error) {
+ 
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   return (
     <section className="contact-section-22">
@@ -48,15 +56,17 @@ export default function ContactForm() {
               <AnimatedText text="Get In Touch" />
             </h2>
           </div>
-          <form ref={form} onSubmit={sandMail}>
+          <form onSubmit={handleSubmit}>
             <div className="row g-4">
               <div className="col-lg-6 wow fadeInUp" data-wow-delay=".2s">
                 <div className="form-clt">
                   <input
                     type="text"
-                    name="name"
-                    id="name"
-                    placeholder="Fast Name"
+                    name="firstName"
+                    id="firstName"
+                    placeholder="First Name"
+                    value={formData.firstName}
+                    onChange={handleChange}
                     required
                   />
                   <div className="icon">
@@ -68,9 +78,11 @@ export default function ContactForm() {
                 <div className="form-clt">
                   <input
                     type="text"
-                    name="name"
-                    id="name12"
+                    name="lastName"
+                    id="lastName"
                     placeholder="Last Name"
+                    value={formData.lastName}
+                    onChange={handleChange}
                     required
                   />
                   <div className="icon">
@@ -81,10 +93,12 @@ export default function ContactForm() {
               <div className="col-lg-6 wow fadeInUp" data-wow-delay=".2s">
                 <div className="form-clt">
                   <input
-                    type="text"
-                    name="number"
-                    id="number"
+                    type="tel"
+                    name="phone"
+                    id="phone"
                     placeholder="Phone Number"
+                    value={formData.phone}
+                    onChange={handleChange}
                     required
                   />
                   <div className="icon">
@@ -95,10 +109,12 @@ export default function ContactForm() {
               <div className="col-lg-6 wow fadeInUp" data-wow-delay=".4s">
                 <div className="form-clt">
                   <input
-                    type="text"
+                    type="email"
                     name="email"
-                    id="email3"
+                    id="email"
                     placeholder="Email Address"
+                    value={formData.email}
+                    onChange={handleChange}
                     required
                   />
                   <div className="icon">
@@ -112,7 +128,8 @@ export default function ContactForm() {
                     name="message"
                     id="message"
                     placeholder="What’s on your mind"
-                    defaultValue={""}
+                    value={formData.message}
+                    onChange={handleChange}
                     required
                   />
                   <div className="icon">
@@ -121,8 +138,8 @@ export default function ContactForm() {
                 </div>
               </div>
               <div className="col-lg-12 wow fadeInUp" data-wow-delay=".4s">
-                <button type="submit" className="theme-btn w-100">
-                  SEND MESSAGE NOW
+                <button type="submit" className="theme-btn w-100" disabled={isSubmitting}>
+                  {isSubmitting ? "Sending..." : "SEND MESSAGE NOW"}
                 </button>
               </div>
             </div>

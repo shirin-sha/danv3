@@ -45,23 +45,7 @@ export default function page() {
                 <li>Error Page</li>
               </ul>
             </div>
-            <div className="breadcrumb-image">
-              <Image
-                src="/assets/img/breadcrumb-image.png"
-                width={540}
-                height={450}
-                alt="img"
-                className="float-bob-x"
-              />
-              <div className="bar-shape">
-                <Image
-                  src="/assets/img/breadcrumb-bar.png"
-                  width={631}
-                  height={604}
-                  alt="img"
-                />
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
@@ -70,14 +54,7 @@ export default function page() {
           <div className="row justify-content-center">
             <div className="col-lg-9">
               <div className="error-items">
-                <div className="error-image wow fadeInUp" data-wow-delay=".3s">
-                  <Image
-                    src="/assets/img/404.png"
-                    width={896}
-                    height={539}
-                    alt="img"
-                  />
-                </div>
+               
                 <h2 className="splt-txt wow">
                   <b>
                     {" "}

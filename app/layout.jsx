@@ -11,14 +11,19 @@ import { ToastContainer } from "react-toastify";
 export default function RootLayout({ children }) {
   const path = usePathname();
   useEffect(() => {
-    window.addEventListener("scroll", function () {
+    const handleScroll = () => {
       const header = document.getElementById("header-sticky");
+      if (!header) return;
+
       if (window.scrollY > 250) {
         header.classList.add("sticky");
       } else {
         header.classList.remove("sticky");
       }
-    });
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
 
     if (typeof window !== "undefined") {
       // Import the script only on the client side
@@ -26,6 +31,10 @@ export default function RootLayout({ children }) {
         // Module is imported, you can access any exported functionality if
       });
     }
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   useEffect(() => {

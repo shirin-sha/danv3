@@ -1,10 +1,26 @@
-"use client";
 import Footer1 from "@/components/footers/Footer1";
 import Header2 from "@/components/headers/Header2";
 import Link from "next/link";
-import { jobOpenings } from "@/data/careers";
 
-export default function CareersPage() {
+async function getJobs() {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/jobs`, {
+      cache: 'no-store',
+    });
+    if (response.ok) {
+      const jobs = await response.json();
+      // Filter only active jobs
+      return jobs.filter(job => job.status === 'Active');
+    }
+    return [];
+  } catch (error) {
+    console.error("Failed to fetch jobs:", error);
+    return [];
+  }
+}
+
+export default async function CareersPage() {
+  const jobOpenings = await getJobs();
   return (
     <>
       <Header2 />
@@ -64,36 +80,37 @@ export default function CareersPage() {
                       <span className="badge text-bg-light" style={{ border: '1px solid rgba(0,0,0,.08)', color: '#1e293b' }}>{job.department}</span>
                       <span className="badge" style={{ backgroundColor: '#0198F1' }}>{job.type}</span>
                     </div>
-                    <small className="text-muted">{new Date(job.posted).toLocaleDateString()}</small>
+                    <small className="text-muted">
+                      {(() => {
+                        try {
+                          const date = new Date(job.posted);
+                          const day = String(date.getDate()).padStart(2, '0');
+                          const month = String(date.getMonth() + 1).padStart(2, '0');
+                          const year = String(date.getFullYear()).slice(-2);
+                          return `${day}/${month}/${year}`;
+                        } catch {
+                          return job.posted;
+                        }
+                      })()}
+                    </small>
                   </div>
 
                   <h3 style={{ marginBottom: 8 }}>{job.title}</h3>
                   <p style={{ marginBottom: 12 }}>{job.description}</p>
 
                   <div className="d-flex flex-column gap-2 mb-3">
-                    <div className="d-flex align-items-center gap-2 text-muted">
-                      <i className="fa-solid fa-location-dot" style={{ color: '#0198F1' }}></i>
-                      <span>{job.location}</span>
-                    </div>
+                 
                     {job.experience && (
                       <div className="d-flex align-items-center gap-2 text-muted">
                         <i className="fa-solid fa-briefcase" style={{ color: '#0198F1' }}></i>
                         <span>{job.experience}</span>
                       </div>
                     )}
-                    {job.salary && (
-                      <div className="d-flex align-items-center gap-2 text-muted">
-                        <i className="fa-solid fa-dollar-sign" style={{ color: '#0198F1' }}></i>
-                        <span>{job.salary}</span>
-                      </div>
-                    )}
+                
                   </div>
 
-                  <div className="d-flex align-items-center justify-content-between">
-                    <Link href={`#`} className="link-btn">
-                      View Details <i className="fa-solid fa-arrow-right"></i>
-                    </Link>
-                    <Link href={`#`} className="btn btn-sm" style={{ backgroundColor: '#0198F1', color: '#fff', borderRadius: 999, padding: '8px 16px' }}>
+                  <div className="d-flex align-items-center justify-content-end">
+                    <Link href={`/apply?jobId=${job.id}`} className="btn btn-sm" style={{ backgroundColor: '#0198F1', color: '#fff', borderRadius: 999, padding: '8px 16px' }}>
                       Apply Now
                     </Link>
                   </div>
