@@ -1,18 +1,22 @@
 import Footer1 from "@/components/footers/Footer1";
 import Header2 from "@/components/headers/Header2";
 import Link from "next/link";
+import { connectToDatabase } from "@/lib/mongodb";
+import Job from "@/models/Job";
 
+// Fetch jobs directly from the database to avoid API round-trip issues in production
 async function getJobs() {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/jobs`, {
-      cache: 'no-store',
-    });
-    if (response.ok) {
-      const jobs = await response.json();
-      // Filter only active jobs
-      return jobs.filter(job => job.status === 'Active');
-    }
-    return [];
+    await connectToDatabase();
+    const jobs = await Job.find({ status: 'Active' }).sort({ createdAt: -1 }).lean();
+    
+    return jobs.map(job => ({
+      ...job,
+      id: job._id.toString(),
+      _id: job._id.toString(),
+      createdAt: job.createdAt?.toISOString(),
+      updatedAt: job.updatedAt?.toISOString(),
+    }));
   } catch (error) {
     console.error("Failed to fetch jobs:", error);
     return [];
@@ -72,51 +76,61 @@ export default async function CareersPage() {
           </div>
 
           <div className="row g-4 mt-2">
-            {jobOpenings.map((job, idx) => (
-              <div key={job.id} className="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay={`${0.2 + (idx % 3) * 0.1}s`}>
-                <div className="items-bg" style={{ padding: 24, height: '100%' }}>
-                  <div className="d-flex align-items-center justify-content-between mb-2">
-                    <div className="d-flex align-items-center gap-2 flex-wrap">
-                      <span className="badge text-bg-light" style={{ border: '1px solid rgba(0,0,0,.08)', color: '#1e293b' }}>{job.department}</span>
-                      <span className="badge" style={{ backgroundColor: '#0198F1' }}>{job.type}</span>
-                    </div>
-                    <small className="text-muted">
-                      {(() => {
-                        try {
-                          const date = new Date(job.posted);
-                          const day = String(date.getDate()).padStart(2, '0');
-                          const month = String(date.getMonth() + 1).padStart(2, '0');
-                          const year = String(date.getFullYear()).slice(-2);
-                          return `${day}/${month}/${year}`;
-                        } catch {
-                          return job.posted;
-                        }
-                      })()}
-                    </small>
-                  </div>
-
-                  <h3 style={{ marginBottom: 8 }}>{job.title}</h3>
-                  <p style={{ marginBottom: 12 }}>{job.description}</p>
-
-                  <div className="d-flex flex-column gap-2 mb-3">
-                 
-                    {job.experience && (
-                      <div className="d-flex align-items-center gap-2 text-muted">
-                        <i className="fa-solid fa-briefcase" style={{ color: '#0198F1' }}></i>
-                        <span>{job.experience}</span>
+            {jobOpenings.length === 0 ? (
+              <div className="col-12 text-center py-5">
+                <div className="mb-3">
+                  <i className="fa-solid fa-briefcase fa-3x text-muted opacity-25"></i>
+                </div>
+                <h4>No Open Positions</h4>
+                <p className="text-muted">We don't have any active job openings at the moment. Please check back later.</p>
+              </div>
+            ) : (
+              jobOpenings.map((job, idx) => (
+                <div key={job.id} className="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay={`${0.2 + (idx % 3) * 0.1}s`}>
+                  <div className="items-bg" style={{ padding: 24, height: '100%' }}>
+                    <div className="d-flex align-items-center justify-content-between mb-2">
+                      <div className="d-flex align-items-center gap-2 flex-wrap">
+                        <span className="badge text-bg-light" style={{ border: '1px solid rgba(0,0,0,.08)', color: '#1e293b' }}>{job.department}</span>
+                        <span className="badge" style={{ backgroundColor: '#0198F1' }}>{job.type}</span>
                       </div>
-                    )}
-                
-                  </div>
+                      <small className="text-muted">
+                        {(() => {
+                          try {
+                            const date = new Date(job.posted);
+                            const day = String(date.getDate()).padStart(2, '0');
+                            const month = String(date.getMonth() + 1).padStart(2, '0');
+                            const year = String(date.getFullYear()).slice(-2);
+                            return `${day}/${month}/${year}`;
+                          } catch {
+                            return job.posted;
+                          }
+                        })()}
+                      </small>
+                    </div>
 
-                  <div className="d-flex align-items-center justify-content-end">
-                    <Link href={`/apply?jobId=${job.id}`} className="btn btn-sm" style={{ backgroundColor: '#0198F1', color: '#fff', borderRadius: 999, padding: '8px 16px' }}>
-                      Apply Now
-                    </Link>
+                    <h3 style={{ marginBottom: 8 }}>{job.title}</h3>
+                    <p style={{ marginBottom: 12 }}>{job.description}</p>
+
+                    <div className="d-flex flex-column gap-2 mb-3">
+                   
+                      {job.experience && (
+                        <div className="d-flex align-items-center gap-2 text-muted">
+                          <i className="fa-solid fa-briefcase" style={{ color: '#0198F1' }}></i>
+                          <span>{job.experience}</span>
+                        </div>
+                      )}
+                  
+                    </div>
+
+                    <div className="d-flex align-items-center justify-content-end">
+                      <Link href={`/apply?jobId=${job.id}`} className="btn btn-sm" style={{ backgroundColor: '#0198F1', color: '#fff', borderRadius: 999, padding: '8px 16px' }}>
+                        Apply Now
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </section>
@@ -124,4 +138,4 @@ export default async function CareersPage() {
       <Footer1 />
     </>
   );
-} 
+}
