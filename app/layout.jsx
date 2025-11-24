@@ -1,5 +1,6 @@
 "use client";
 
+import Head from "next/head";
 import { useEffect } from "react";
 import "../public/assets/scss/styles.scss";
 import BackToTop from "@/components/common/BackToTop";
@@ -55,7 +56,7 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <head>
+      <Head>
         <title>{SITE_TITLE}</title>
         <meta name="description" content={SITE_DESCRIPTION} />
 
@@ -66,13 +67,15 @@ export default function RootLayout({ children }) {
         <meta property="og:url" content={SITE_URL} />
         <meta property="og:site_name" content={SITE_TITLE} />
         <meta property="og:image" content={OG_IMAGE} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={SITE_TITLE} />
         <meta name="twitter:description" content={SITE_DESCRIPTION} />
         <meta name="twitter:image" content={OG_IMAGE} />
-      </head>
+      </Head>
       <body>
         <ToastContainer
           position="top-right"
