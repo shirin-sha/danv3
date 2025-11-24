@@ -11,7 +11,7 @@ const SITE_TITLE = "Dan Trading";
 const SITE_DESCRIPTION =
   "Dan Trading delivers comprehensive trading solutions, premium products, and reliable support for industrial clients worldwide.";
 const SITE_URL = "https://dantrading.com";
-const OG_IMAGE = "https://dantrading.com/assets/img/logo/logo.png";
+const OG_IMAGE = "https://dantrading.com/assets/img/logo.png";
 
 export default function RootLayout({ children }) {
   const path = usePathname();
