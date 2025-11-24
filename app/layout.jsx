@@ -7,6 +7,11 @@ import Mouse from "@/components/common/Mouse";
 import { usePathname } from "next/navigation";
 import SearchWrap from "@/components/common/SearchWrap";
 import { ToastContainer } from "react-toastify";
+const SITE_TITLE = "Dan Trading";
+const SITE_DESCRIPTION =
+  "Dan Trading delivers comprehensive trading solutions, premium products, and reliable support for industrial clients worldwide.";
+const SITE_URL = "https://dantrading.com";
+const OG_IMAGE = "https://dantrading.com/assets/img/logo/logo.png";
 
 export default function RootLayout({ children }) {
   const path = usePathname();
@@ -50,6 +55,24 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <head>
+        <title>{SITE_TITLE}</title>
+        <meta name="description" content={SITE_DESCRIPTION} />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={SITE_TITLE} />
+        <meta property="og:description" content={SITE_DESCRIPTION} />
+        <meta property="og:url" content={SITE_URL} />
+        <meta property="og:site_name" content={SITE_TITLE} />
+        <meta property="og:image" content={OG_IMAGE} />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={SITE_TITLE} />
+        <meta name="twitter:description" content={SITE_DESCRIPTION} />
+        <meta name="twitter:image" content={OG_IMAGE} />
+      </head>
       <body>
         <ToastContainer
           position="top-right"
